@@ -6,7 +6,6 @@
     "quotemark": [true, "double"],
     "no-console": { "severity": "off" },
     "no-shadowed-variable": { "severity": "warn" },
-    "no-namespace": false,
     "interface-name": false,
     "no-var-requires": true,
     "no-empty": { "severity": "warn" },

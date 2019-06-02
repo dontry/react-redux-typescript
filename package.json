@@ -16,6 +16,7 @@
   "scripts": {
     "start": "react-scripts start",
     "build": "react-scripts build",
+    "dev": "PORT=3006 react-scripts start",
     "test": "is-ci \"test:coverage\" \"test:watch\"",
     "test:local": "NODE_ENV=local jest --watch",
     "test:watch": "NODE_ENV=test jest --watch --verbose",

@@ -16,7 +16,7 @@ export function configureStore(initialState?: RootState): Store<RootState> {
 
   if ((module as any).hot) {
     (module as any).hot.accept("../reducers", () => {
-      const nextReducer = require("./reducers");
+      const nextReducer = require("../reducers");
       store.replaceReducer(nextReducer);
     });
   }

@@ -4,7 +4,7 @@ module.exports = {
     "^.+\\.tsx?$": "ts-jest"
   },
   preset: "ts-jest",
-  testPathIgnorePatterns: ["<rootDir>/cypress/", "<rootDir>/node_modules"],
+  testPathIgnorePatterns: ["<rootDir>/node_modules"],
   moduleDirectories: ["node_modules"],
   testRegex: "(/__tests__/.*|(\\.|/)(test|spec))\\.(jsx?|tsx?)$",
   moduleFileExtensions: ["ts", "tsx", "js", "jsx", "json", "node"],

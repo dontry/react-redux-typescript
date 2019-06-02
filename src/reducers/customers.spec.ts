@@ -1,6 +1,6 @@
 import { customersReducer } from "./customers";
 import { createCustomer } from "../test/fixtures/customerMock";
-import { Customer } from "src/models";
+import { Customer } from "../models";
 import { addCustomer, deleteCustomer, updateCustomer } from "../actions/customers";
 import _ from "lodash";
 

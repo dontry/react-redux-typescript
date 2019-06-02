@@ -8,7 +8,7 @@ export const mapStateToProps = (state: RootState) => ({
 });
 
 const dispatchProps = {
-  deleteCustomer
+  onDelete: deleteCustomer
 };
 
 export default connect(

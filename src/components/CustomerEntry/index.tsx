@@ -1,7 +1,8 @@
 import React from "react";
 import { Customer } from "../../models";
-import { EntryWrapper } from "./style";
+import { EntryWrapper, ButtonGroup } from "./style";
 import { deleteCustomer } from "../../actions/customers";
+import { Button } from "@material-ui/core";
 
 interface Props {
   customer: Customer;
@@ -18,10 +19,14 @@ const CustomerEntry = ({ customer, onDelete }: Props) => {
   return (
     <EntryWrapper>
       <span data-testid="customer-name">{fullName}</span>
-      <span>
-        <button>Edit</button>
-        {onDelete && <button data-testid="delete-btn" onClick={_handleDelete}>Delete</button>}
-      </span>
+      <ButtonGroup>
+        <Button color="primary">Edit</Button>
+        {onDelete && (
+          <Button data-testid="delete-btn" color="secondary" onClick={_handleDelete}>
+            Delete
+          </Button>
+        )}
+      </ButtonGroup>
     </EntryWrapper>
   );
 };
