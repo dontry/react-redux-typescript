@@ -1,16 +1,47 @@
 import { Customer } from "../models";
-import { ADD_CUSTOMER, DELETE_CUSTOMER, UPDATE_CUSTOMER } from "../actions/types";
+import { createSelector } from "reselect";
+import {
+  ADD_CUSTOMER,
+  DELETE_CUSTOMER,
+  UPDATE_CUSTOMER,
+  SELECT_CUSTOMER,
+  UPDATE_QUERY
+} from "../actions/types";
+import { CustomerState, RootState } from "./state";
+import { combineReducers } from "redux";
 
-const initialState: Customer[] = [
-  {
-    id: "123",
-    firstName: "xxx",
-    lastName: "xsdasfdsa",
-    dob: Date.now().toString()
+export const initialState: CustomerState = {
+  selectedId: null,
+  query: "",
+  list: [
+    {
+      id: "123",
+      firstName: "xxx",
+      lastName: "xsdasfdsa",
+      dob: Date.now().toString()
+    }
+  ]
+};
+
+export const selectedId = (state = initialState.selectedId, action: any) => {
+  switch (action.type) {
+    case SELECT_CUSTOMER:
+      return action.payload;
+    default:
+      return state;
   }
-];
+};
 
-export const customersReducer = (state = initialState, action: any) => {
+export const query = (state = initialState.query, action: any) => {
+  switch (action.type) {
+    case UPDATE_QUERY:
+      return action.payload;
+    default:
+      return state;
+  }
+};
+
+export const list = (state = initialState.list, action: any) => {
   switch (action.type) {
     case ADD_CUSTOMER:
       return [action.payload];
@@ -24,3 +55,34 @@ export const customersReducer = (state = initialState, action: any) => {
       return state;
   }
 };
+
+export const customerReducer = combineReducers({
+  selectedId,
+  list,
+  query
+});
+
+// Selector
+export const selectCustomers = (state: RootState): Customer[] => state.customers.list;
+export const selectQuery = (state: RootState): string => state.customers.query;
+export const selectCustomerById = createSelector(
+  selectCustomers,
+  state => state.customers.selectedId,
+  (customers: Customer[], id: string | null) => customers.find(customer => customer.id === id)
+);
+
+export const selectCustomerByQuery = createSelector(
+  selectCustomers,
+  selectQuery,
+  (customers: Customer[], query: string) => {
+    if (query === "") {
+      return customers;
+    } else {
+      const regex: RegExp = new RegExp(query);
+      return customers.filter(customer => {
+        const fullname = `${customer.firstName} ${customer.lastName}`;
+        return regex.test(fullname);
+      });
+    }
+  }
+);

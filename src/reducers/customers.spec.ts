@@ -1,4 +1,4 @@
-import { customersReducer } from "./customers";
+import { list } from "./customers";
 import { createCustomer } from "../test/fixtures/customerMock";
 import { Customer } from "../models";
 import { addCustomer, deleteCustomer, updateCustomer } from "../actions/customers";
@@ -8,7 +8,7 @@ describe("customer reducer", () => {
   it("should add a customer", () => {
     const state: Customer[] = [];
     const customer = createCustomer();
-    const res = customersReducer(state, addCustomer(customer));
+    const res = list(state, addCustomer(customer));
 
     expect(res.length).toEqual(1);
     expect(res[0]).toEqual(customer);
@@ -17,7 +17,7 @@ describe("customer reducer", () => {
   it("should delete a customer by id", () => {
     const customer = createCustomer();
     const state: Customer[] = [customer];
-    const res = customersReducer(state, deleteCustomer(customer.id));
+    const res = list(state, deleteCustomer(customer.id));
 
     expect(res.length).toEqual(0);
   });
@@ -28,7 +28,7 @@ describe("customer reducer", () => {
 
     const updated = _.cloneDeep(customer);
 
-    const res = customersReducer(state, updateCustomer(updated.id, updated));
+    const res = list(state, updateCustomer(updated.id, updated));
 
     expect(res.length).toEqual(1);
     expect(res[0]).toEqual(updated);

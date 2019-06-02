@@ -11,7 +11,10 @@
     "react-redux": "^7.0.3",
     "react-scripts": "3.0.1",
     "redux": "^4.0.1",
-    "styled-components": "^4.2.1"
+    "reselect": "^4.0.0",
+    "styled-components": "^4.2.1",
+    "uuid": "^3.3.2",
+    "yup": "^0.27.0"
   },
   "scripts": {
     "start": "react-scripts start",
@@ -54,7 +57,10 @@
     "@types/react-dom": "^16.8.4",
     "@types/react-redux": "^7.0.9",
     "@types/redux": "^3.6.0",
+    "@types/reselect": "^2.2.0",
     "@types/styled-components": "^4.1.15",
+    "@types/uuid": "^3.4.4",
+    "@types/yup": "^0.26.13",
     "cypress-testing-library": "^4.0.0",
     "cz-conventional-changelog": "2.1.0",
     "enzyme": "^3.9.0",
