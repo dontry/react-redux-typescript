@@ -5,16 +5,16 @@ module.exports = {
   },
   preset: "ts-jest",
   moduleDirectories: ["node_modules"],
-  //   testRegex: "(/__tests__/.*|(\\.|/)(test|spec))\\.tsx?$",
+  testRegex: "(/__tests__/.*|(\\.|/)(test|spec))\\.(jsx?|tsx?)$",
   moduleFileExtensions: ["ts", "tsx", "js", "jsx", "json", "node"],
   // Setup Enzyme
-  //   snapshotSerializers: ["enzyme-to-json/serializer"],
+  snapshotSerializers: ["enzyme-to-json/serializer"],
   moduleNameMapper: {
     "@stores": "<rootDir>/src/stores",
     "@actions": "<rootDir>/src/actions",
     src: "<rootDir>/src",
-    "\\.css$": "<rootDir>/src/test/fixture/styleMock.ts"
+    "\\.css$": "<rootDir>/src/test/fixtures/styleMock.ts"
   },
-  setupTestFrameworkScriptFile: "<rootDir>/src/setupEnzyme.ts",
+  setupFilesAfterEnv: ["<rootDir>/src/test/setup.ts"],
   watchPlugins: ["jest-watch-typeahead/filename", "jest-watch-typeahead/testname"]
 };
