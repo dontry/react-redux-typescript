@@ -1,7 +1,7 @@
 import { Customer } from "../models";
 
 export interface RootState {
-  customers: RootState.CustomerState;
+  customers: Customer[];
 }
 
 export namespace RootState {

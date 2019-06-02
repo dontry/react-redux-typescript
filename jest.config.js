@@ -11,9 +11,6 @@ module.exports = {
   // Setup Enzyme
   snapshotSerializers: ["enzyme-to-json/serializer"],
   moduleNameMapper: {
-    "@stores": "<rootDir>/src/stores",
-    "@actions": "<rootDir>/src/actions",
-    src: "<rootDir>/src",
     "\\.css$": "<rootDir>/src/test/fixtures/styleMock.ts"
   },
   setupFilesAfterEnv: ["<rootDir>/src/test/setup.ts", "@testing-library/react/cleanup-after-each"],

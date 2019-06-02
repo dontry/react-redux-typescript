@@ -1,32 +1,22 @@
 import React from "react";
-import { connect } from "react-redux";
-import { Customer } from "../../models";
 import { StyledListWrapper } from "./style";
 import CustomerEntry from "../CustomerEntry";
-import { RootState } from "../../reducers/state";
+import { Customer } from "../../models";
 import { deleteCustomer } from "../../actions/customers";
 
-const mapStateToProps = (state: RootState) => ({
-  customers: state.customers
-});
-
-const dispatchProps = {
-  deleteCustomer
-};
-
-type Props = ReturnType<typeof mapStateToProps> & typeof dispatchProps;
+interface Props {
+  customers: Customer[];
+  deleteCustomer?: typeof deleteCustomer;
+}
 
 const CustomerList = ({ customers, deleteCustomer }: Props) => {
   return (
     <StyledListWrapper>
       {customers.map(customer => (
-        <CustomerEntry customer={customer} onDelete={deleteCustomer} />
+        <CustomerEntry key={customer.id} customer={customer} onDelete={deleteCustomer} />
       ))}
     </StyledListWrapper>
   );
 };
 
-export default connect(
-  mapStateToProps,
-  dispatchProps
-)(CustomerList);
+export default CustomerList;
