@@ -1,5 +1,11 @@
+import { createMuiTheme } from "@material-ui/core/styles";
+import { pink, red, indigo } from "@material-ui/core/colors";
+
 export const theme = {
-  colors: {
-    primary: "#2196f3"
+  palette: {
+    primary: "indigo",
+    secondary: "pink",
+    error: "red",
+    contrastThreshold: 3
   }
 };

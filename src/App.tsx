@@ -1,13 +1,15 @@
 import React from "react";
 import "./App.css";
 import CustomerListContainer from "./containers/CustomerListContainer";
+import CommandBar from "./components/CommandBar";
 import { StyledListWrapper, StyledListTitle } from "./style";
 
 function App() {
   return (
     <div className="App">
+      <StyledListTitle>Customer List</StyledListTitle>
       <StyledListWrapper>
-        <StyledListTitle>Customer List</StyledListTitle>
+        <CommandBar />
         <CustomerListContainer />
       </StyledListWrapper>
     </div>

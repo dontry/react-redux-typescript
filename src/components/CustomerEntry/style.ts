@@ -5,10 +5,10 @@ export const EntryWrapper = styled.li`
   justify-content: space-between;
   align-items: center;
   padding: 8px 16px;
-  border-bottom: 1px solid ${props => props.theme.colors.primary};
+  border-top: 1px solid ${props => props.theme.palette.primary};
 
   &:last-child {
-    border-bottom: none;
+    border-bottom: 1px solid ${props => props.theme.palette.primary};
   }
 `;
 

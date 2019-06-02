@@ -1,7 +1,7 @@
 import styled from "styled-components";
 
 export const StyledListTitle = styled.h1`
-  color: ${props => props.theme.colors.primary};
+  color: ${props => props.theme.palette.primary};
 `;
 
 export const StyledListWrapper = styled.div`
