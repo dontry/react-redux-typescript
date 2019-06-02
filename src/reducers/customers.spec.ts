@@ -1,12 +1,13 @@
 import { customersReducer} from "./customers";
 import { createCustomer } from "../test/fixtures/customerMock";
 import { addCustomer, deleteCustomer, updateCustomer } from "../actions/customers";
-import * as _ from 'lodash'
+import _ from 'lodash'
+import { Customer } from "src/models";
 
 
 describe('customer reducer', () => {
     it("should add a customer", () => {
-        const state = [];
+        const state: Customer[] = [];
         const customer = createCustomer();
         const res = customersReducer(state, addCustomer(customer));
 
@@ -16,7 +17,7 @@ describe('customer reducer', () => {
 
     it("should delete a customer by id", () => {
         const customer = createCustomer();
-        const state = [customer];
+        const state: Customer[] = [customer];
         const res = customersReducer(state, deleteCustomer(customer.id));
 
         expect(res.length).toEqual(0);
@@ -24,7 +25,7 @@ describe('customer reducer', () => {
 
     it("should update a customer by id", () => {
         const customer = createCustomer();
-        const state = [customer];
+        const state: Customer[] = [customer];
 
         const updated = _.cloneDeep(customer);
 

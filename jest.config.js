@@ -4,6 +4,7 @@ module.exports = {
     "^.+\\.tsx?$": "ts-jest"
   },
   preset: "ts-jest",
+  testPathIgnorePatterns: ["<rootDir>/cypress/", "<rootDir>/node_modules"],
   moduleDirectories: ["node_modules"],
   testRegex: "(/__tests__/.*|(\\.|/)(test|spec))\\.(jsx?|tsx?)$",
   moduleFileExtensions: ["ts", "tsx", "js", "jsx", "json", "node"],
@@ -15,6 +16,6 @@ module.exports = {
     src: "<rootDir>/src",
     "\\.css$": "<rootDir>/src/test/fixtures/styleMock.ts"
   },
-  setupFilesAfterEnv: ["<rootDir>/src/test/setup.ts"],
+  setupFilesAfterEnv: ["<rootDir>/src/test/setup.ts", "@testing-library/react/cleanup-after-each"],
   watchPlugins: ["jest-watch-typeahead/filename", "jest-watch-typeahead/testname"]
 };
