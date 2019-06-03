@@ -1,7 +1,7 @@
 import React from "react";
 import CustomerList from "./index";
 import { createCustomer } from "../../test/fixtures/customerMock";
-import { render } from "@testing-library/react";
+import { render } from "../../test/fixtures/config";
 
 describe("customerList", () => {
   it("should render 3 customers", () => {

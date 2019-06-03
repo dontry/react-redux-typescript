@@ -1,19 +1,17 @@
 import React from "react";
 import { StyledListWrapper, StyledListHeader } from "./style";
-import CustomerEntry from "../CustomerEntry";
+import CustomerEntryContainer from "../../containers/CustomerEntryContainer";
 import { Customer } from "../../models";
-import { deleteCustomer } from "../../actions/customers";
 
 interface Props {
   customers: Customer[];
-  onDelete?: typeof deleteCustomer;
 }
 
-const CustomerList = ({ customers, onDelete }: Props) => {
+const CustomerList = ({ customers }: Props) => {
   return (
     <StyledListWrapper>
       {customers.map(customer => (
-        <CustomerEntry key={customer.id} customer={customer} onDelete={onDelete} />
+        <CustomerEntryContainer key={customer.id} customer={customer} />
       ))}
     </StyledListWrapper>
   );

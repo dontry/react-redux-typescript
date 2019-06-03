@@ -4,8 +4,9 @@ import CustomerListContainer from "./containers/CustomerListContainer";
 import CommandBarContainer from "./containers/CommandBarContainer";
 import { StyledListWrapper, StyledListTitle } from "./style";
 import EditorDialogContainer from "containers/EditorDialogContainer";
+import { hot } from "react-hot-loader/root";
 
-function App() {
+const App = () => {
   return (
     <div className="App">
       <StyledListTitle>Customer List</StyledListTitle>
@@ -16,6 +17,6 @@ function App() {
       </StyledListWrapper>
     </div>
   );
-}
+};
 
-export default App;
+export default hot(App);

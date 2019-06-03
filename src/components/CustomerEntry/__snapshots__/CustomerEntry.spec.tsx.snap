@@ -1,0 +1,16 @@
+// Jest Snapshot v1, https://goo.gl/fbAQLP
+
+exports[`CustomerEntry should render a customer 1`] = `
+<li
+  class="sc-bdVaJa bBrGBh"
+>
+  <span
+    data-testid="customer-name"
+  >
+    Tatyana Johns
+  </span>
+  <span
+    class="sc-bwzfXH hLvLiK"
+  />
+</li>
+`;
