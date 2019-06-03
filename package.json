@@ -19,7 +19,6 @@
   "scripts": {
     "start": "react-scripts start",
     "build": "react-scripts build",
-    "dev": "PORT=3006 react-scripts start",
     "test": "is-ci \"test:coverage\" \"test:watch\"",
     "test:watch": "jest --watch --verbose",
     "test:debug": "node --inspect-brk jest --runInBand --watch",
