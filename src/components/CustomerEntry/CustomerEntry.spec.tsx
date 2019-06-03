@@ -1,10 +1,8 @@
 import React from "react";
 import CustomerEntry from "./index";
-import { render, cleanup, fireEvent } from "../../test/fixtures/config";
+import { render, fireEvent } from "../../test/fixtures/config";
 import { createCustomer } from "../../test/fixtures/customerMock";
 import * as actions from "../../actions/customers";
-
-afterEach(cleanup);
 
 describe("CustomerEntry", () => {
   it("should render the component with a customer name", () => {
@@ -13,6 +11,13 @@ describe("CustomerEntry", () => {
     expect(getByTestId("customer-name")).toHaveTextContent(
       `${customer.firstName} ${customer.lastName}`
     );
+  });
+
+  it("should render a customer", () => {
+    const customer = createCustomer({ seed: 1 });
+    const { container, getByTestId } = render(<CustomerEntry customer={customer} />);
+
+    expect(container.firstChild).toMatchSnapshot();
   });
 
   it("calls deleteCustomer function by clicking delete button", () => {
