@@ -1,8 +1,7 @@
 import React from "react";
 import { Button, TextField } from "@material-ui/core";
 import { StyledBarWrapper } from "./style";
-import { UpdateQueryAction } from "actions/types";
-import { updateQuery } from "actions/customers";
+import { updateQuery } from "../../actions/customers";
 
 interface Props {
   onChange: typeof updateQuery;
@@ -14,15 +13,17 @@ const CommandBar = ({ onOpen, onChange }: Props) => {
     onOpen();
   };
 
-  const _handleChange = (e: React.SyntheticEvent<HTMLInputElement>) => {
+  const _handleChange = (
+    e: React.SyntheticEvent<HTMLInputElement | HTMLSelectElement | HTMLTextAreaElement>
+  ) => {
     onChange(e.currentTarget.value);
   };
   return (
     <StyledBarWrapper>
-      <Button variant="contained" color="primary" onClick={_handleOpen}>
+      <Button data-testid="create-btn" variant="contained" color="primary" onClick={_handleOpen}>
         Create
       </Button>
-      <TextField id="search" label="Search" />
+      <TextField data-testid="search-bar" id="search" label="Search" onChange={_handleChange} />
     </StyledBarWrapper>
   );
 };
