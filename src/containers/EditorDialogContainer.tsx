@@ -1,4 +1,3 @@
-import React from "react";
 import { connect } from "react-redux";
 import { addCustomer, updateCustomer, selectCustomer } from "../actions/customers";
 import { toggleEditorDialog } from "../actions/ui";

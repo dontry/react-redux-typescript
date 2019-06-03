@@ -13,14 +13,7 @@ import { combineReducers } from "redux";
 export const initialState: CustomerState = {
   selectedId: null,
   query: "",
-  list: [
-    {
-      id: "123",
-      firstName: "xxx",
-      lastName: "xsdasfdsa",
-      dob: Date.now().toString()
-    }
-  ]
+  list: []
 };
 
 export const selectedId = (state = initialState.selectedId, action: any) => {
@@ -44,7 +37,7 @@ export const query = (state = initialState.query, action: any) => {
 export const list = (state = initialState.list, action: any) => {
   switch (action.type) {
     case ADD_CUSTOMER:
-      return [action.payload];
+      return [...state, action.payload];
     case DELETE_CUSTOMER:
       return state.filter(customer => customer.id !== action.payload);
     case UPDATE_CUSTOMER:
@@ -63,8 +56,8 @@ export const customerReducer = combineReducers({
 });
 
 // Selector
-export const selectCustomers = (state: RootState): Customer[] => state.customers.list;
-export const selectQuery = (state: RootState): string => state.customers.query;
+export const selectCustomers = (state: any): Customer[] => state.customers.list;
+export const selectQuery = (state: any): string => state.customers.query;
 export const selectCustomerById = createSelector(
   selectCustomers,
   state => state.customers.selectedId,
@@ -78,7 +71,7 @@ export const selectCustomerByQuery = createSelector(
     if (query === "") {
       return customers;
     } else {
-      const regex: RegExp = new RegExp(query);
+      const regex: RegExp = new RegExp(query, "i");
       return customers.filter(customer => {
         const fullname = `${customer.firstName} ${customer.lastName}`;
         return regex.test(fullname);

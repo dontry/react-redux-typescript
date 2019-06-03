@@ -1,36 +1,74 @@
-import { list } from "./customers";
+import { customerReducer, initialState, selectCustomerByQuery } from "./customers";
 import { createCustomer } from "../test/fixtures/customerMock";
 import { Customer } from "../models";
-import { addCustomer, deleteCustomer, updateCustomer } from "../actions/customers";
+import {
+  addCustomer,
+  deleteCustomer,
+  updateCustomer,
+  selectCustomer,
+  updateQuery
+} from "../actions/customers";
+import { CustomerState } from "./state";
 import _ from "lodash";
 
 describe("customer reducer", () => {
-  it("should add a customer", () => {
-    const state: Customer[] = [];
-    const customer = createCustomer();
-    const res = list(state, addCustomer(customer));
-
-    expect(res.length).toEqual(1);
-    expect(res[0]).toEqual(customer);
+  let state: CustomerState;
+  beforeEach(() => {
+    state = _.cloneDeep(initialState);
   });
 
-  it("should delete a customer by id", () => {
-    const customer = createCustomer();
-    const state: Customer[] = [customer];
-    const res = list(state, deleteCustomer(customer.id));
+  describe("customer list", () => {
+    it("should add a customer", () => {
+      const customer = createCustomer();
+      const res = customerReducer(state, addCustomer(customer));
 
-    expect(res.length).toEqual(0);
+      expect(res.list.length).toEqual(1);
+      expect(res.list[0]).toEqual(customer);
+    });
+
+    it("should delete a customer by id", () => {
+      const customer = createCustomer();
+      state = { ...state, list: [customer] };
+      const res = customerReducer(state, deleteCustomer(customer.id));
+
+      expect(res.list.length).toEqual(0);
+    });
+
+    it("should update a customer by id", () => {
+      const customer = createCustomer();
+      state = { ...state, list: [customer] };
+
+      const updated = _.cloneDeep(customer);
+
+      const res = customerReducer(state, updateCustomer(updated.id, updated));
+
+      expect(res.list.length).toEqual(1);
+      expect(res.list[0]).toEqual(updated);
+    });
   });
 
-  it("should update a customer by id", () => {
-    const customer = createCustomer();
-    const state: Customer[] = [customer];
+  describe(" selectedId", () => {
+    it("should select a customer by Id", () => {
+      const customer = createCustomer();
+      state = { ...state, list: [customer] };
+      const res = customerReducer(state, selectCustomer(customer.id));
 
-    const updated = _.cloneDeep(customer);
+      expect(res.selectedId).toBe(customer.id);
+    });
+  });
 
-    const res = list(state, updateCustomer(updated.id, updated));
+  describe("query", () => {
+    it("should update the customer query", () => {
+      const res = customerReducer(state, updateQuery("query"));
+      expect(res.query).toBe("query");
+    });
 
-    expect(res.length).toEqual(1);
-    expect(res[0]).toEqual(updated);
+    it("should filter customers by query", () => {
+      const customers = [createCustomer(), createCustomer(), createCustomer()];
+      state = { ...state, list: customers };
+      const res = customerReducer(state, updateQuery(customers[0].firstName));
+
+      expect(selectCustomerByQuery({ customers: res }).length).toBeGreaterThanOrEqual(1);
+    });
   });
 });

@@ -3,6 +3,7 @@ import { TextField } from "@material-ui/core";
 
 export const DialogBody = styled.div`
   display: flex;
+  box-sizing: border-box;
   width: 30vw;
   flex-direction: column;
   justify-content: space-evenly;
@@ -13,7 +14,7 @@ export const DialogBody = styled.div`
 export const DialogFooter = styled.div`
   display: flex;
   justify-content: flex-end;
-  padding: 0 16px;
+  padding: 16px 16px;
 `;
 
 export const StyledTitle = styled.h2`

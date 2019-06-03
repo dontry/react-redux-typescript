@@ -1,9 +1,10 @@
 import React from "react";
-import { withFormik, FormikProps } from "formik";
+import { withFormik, FormikProps, Field } from "formik";
 import { createStyles, makeStyles, Theme } from "@material-ui/core/styles";
 import { customerSchema } from "../../utils/validations";
 import { addCustomer, updateCustomer, selectCustomer } from "../../actions/customers";
 import uuid from "uuid";
+import _ from "lodash";
 
 import { Dialog, DialogActions, DialogTitle, Button, TextField } from "@material-ui/core";
 import { DialogBody, DialogFooter } from "./style";
@@ -18,6 +19,7 @@ interface FormValues {
 }
 
 interface FormProps {
+  customer?: Customer;
   onCreate: typeof addCustomer;
   onUpdate: typeof updateCustomer;
   onClose(): void;
@@ -34,10 +36,22 @@ const useStyles = makeStyles((theme: Theme) =>
   })
 );
 
-const BaseEditorForm = ({ values, onClose, onUpdate, onCreate, errors }: any) => {
+const BaseEditorForm = ({
+  values,
+  errors,
+  onClose,
+  onUpdate,
+  onCreate,
+  handleSubmit
+}: FormProps & FormikProps<FormValues>) => {
   const classes = useStyles();
 
-  const _handleSubmit = () => {
+  const _handleSubmit = (e: any) => {
+    handleSubmit(e);
+    if (!_.isEmpty(errors)) {
+      console.log("errors:", errors);
+      return;
+    }
     if (values.id) {
       onUpdate(values.id, values as Customer);
       onClose();
@@ -54,31 +68,45 @@ const BaseEditorForm = ({ values, onClose, onUpdate, onCreate, errors }: any) =>
   return (
     <form onSubmit={_handleSubmit}>
       <DialogBody>
-        <TextField
-          className={classes.textField}
-          label="First Name"
-          InputLabelProps={{ shrink: true }}
-          value={values.firstName}
-          error={!!errors.firstName}
-          helperText={errors.firstName}
-        />
-        <TextField
-          className={classes.textField}
-          label="Last Name"
-          InputLabelProps={{ shrink: true }}
-          value={values.lastName}
-          error={!!errors.lastName}
-          helperText={errors.lastName}
-        />
-        <TextField
-          className={classes.textField}
-          label="Date of Birth"
-          type="date"
-          InputLabelProps={{ shrink: true }}
-          value={values.dob}
-          error={!!errors.dob}
-          helperText={errors.dob}
-        />
+        <Field name="firstName">
+          {({ field, form }: any) => (
+            <TextField
+              {...field}
+              className={classes.textField}
+              label="First Name"
+              InputLabelProps={{ shrink: true }}
+              error={!!form.errors.firstName && form.touched.firstName}
+              helperText={form.touched.firstName ? form.errors.firstName : ""}
+            />
+          )}
+        </Field>
+        <Field name="lastName">
+          {({ field, form }: any) => (
+            <TextField
+              {...field}
+              className={classes.textField}
+              label="Last Name"
+              name="lastName"
+              InputLabelProps={{ shrink: true }}
+              error={!!form.errors.lastName && form.touched.lastName}
+              helperText={form.touched.lastName ? form.errors.lastName : ""}
+            />
+          )}
+        </Field>
+        <Field name="dob">
+          {({ field, form }: any) => (
+            <TextField
+              {...field}
+              className={classes.textField}
+              label="Date of Birth"
+              type="date"
+              name="dob"
+              InputLabelProps={{ shrink: true }}
+              error={!!form.errors.dob && form.touched.firstName}
+              helperText={form.touched.dob ? form.errors.dob : ""}
+            />
+          )}
+        </Field>
       </DialogBody>
       <DialogFooter>
         <DialogActions>
@@ -94,14 +122,10 @@ const BaseEditorForm = ({ values, onClose, onUpdate, onCreate, errors }: any) =>
   );
 };
 
-const enhance = withFormik<Props, FormValues>({
+const enhance = withFormik<FormProps, FormValues>({
   mapPropsToValues: ({ customer }) => {
     if (customer) {
-      return {
-        firstName: customer.firstName || "",
-        lastName: customer.lastName || "",
-        dob: customer.dob || ""
-      };
+      return customer;
     } else {
       return {
         firstName: "",
@@ -112,7 +136,7 @@ const enhance = withFormik<Props, FormValues>({
   },
   validationSchema: customerSchema,
   handleSubmit: (values, { resetForm }) => {
-    resetForm();
+    console.log("submitting");
   },
   displayName: "Customer Editor"
 });
@@ -143,7 +167,12 @@ const EditorDialog = ({
   return (
     <Dialog open={isOpen} style={{ padding: 16 }}>
       <DialogTitle>Customer Editor</DialogTitle>
-      <EditorForm customer={customer} onCreate={onCreate} onUpdate={onUpdate} />
+      <EditorForm
+        customer={customer}
+        onCreate={onCreate}
+        onUpdate={onUpdate}
+        onClose={_handleClose}
+      />
     </Dialog>
   );
 };
